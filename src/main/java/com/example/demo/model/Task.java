@@ -1,15 +1,16 @@
-package com.example.demo;
+package com.example.demo.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tasks")
 public class Task {
 	@Id
 	private int id;
 	private String label;
 	private String description;
-
 	public int getId() {
 		return id;
 	}
