@@ -19,8 +19,9 @@ public class TaskService {
 	@Autowired
     TaskRepo repo;
 	
-	public void addTask(Task t) {
+	public Task addTask(Task t) {
         repo.save(t);
+        return t;
     }
 	
 	public Optional<Task> getTask(Integer id) {
@@ -40,6 +41,11 @@ public class TaskService {
 	public void addName(Integer id,String Name) {
 		Task task = repo.getById(id);
 		task.setDescription(Name);
+		repo.save(task);
+	}
+	public void completeTask(Integer id) {
+		Task task = repo.getById(id);
+		task.setIsComplete(true);
 		repo.save(task);
 	}
 }

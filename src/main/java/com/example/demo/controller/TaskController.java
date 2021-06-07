@@ -25,8 +25,8 @@ public class TaskController {
 	private TaskService ts;
 
 	@PostMapping("/")
-	public void add(@RequestBody Task t) {
-		ts.addTask(t);
+	public Task add(@RequestBody Task t) {
+		return ts.addTask(t);
 	}
 
 	@GetMapping
@@ -54,5 +54,11 @@ public class TaskController {
 	public void updateName(@PathVariable("id") Integer id,@PathVariable("name") String name)
 	{
 		ts.addDescription(id, name);
+	}
+	@PutMapping("/{id}/complete")
+	public String updateTaskStatus(@PathVariable("id") Integer id)
+	{
+		ts.completeTask(id);
+		return "Task Completed";
 	}
 }

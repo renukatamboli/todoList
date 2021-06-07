@@ -1,2 +1,2 @@
 ALTER TABLE tasks
-ADD isComplete bool default 0;
+ADD is_complete boolean default false;

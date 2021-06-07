@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,16 @@ public class Task {
 	private String name;
 	private String label;
 	private String description;
+	@Column(name = "is_complete", columnDefinition = "TINYINT(1)")
+	private boolean isComplete;
+
+	public boolean getIsComplete() {
+		return isComplete;
+	}
+
+	public void setIsComplete(boolean isComplete) {
+		this.isComplete = isComplete;
+	}
 
 	public int getId() {
 		return id;
