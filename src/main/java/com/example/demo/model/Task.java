@@ -11,6 +11,7 @@ import javax.persistence.Table;
 public class Task {
 	@Id
 	private int id;
+	private String name;
 	private String label;
 	private String description;
 	public int getId() {
@@ -19,6 +20,14 @@ public class Task {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getLabel() {
