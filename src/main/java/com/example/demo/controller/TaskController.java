@@ -22,7 +22,7 @@ import com.example.demo.service.TaskService;
 @RequestMapping("/tasks")
 public class TaskController {
 	@Autowired
-	TaskService ts;
+	private TaskService ts;
 
 	@PostMapping("/")
 	public void add(@RequestBody Task t) {

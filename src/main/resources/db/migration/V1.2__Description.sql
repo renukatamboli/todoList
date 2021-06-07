@@ -1,0 +1,1 @@
+ ALTER TABLE tasks ADD id int NOT NULL AUTO_INCREMENT primary key;

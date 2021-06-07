@@ -10,10 +10,12 @@ import javax.persistence.Table;
 @Table(name = "tasks")
 public class Task {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
 	private String label;
 	private String description;
+
 	public int getId() {
 		return id;
 	}
