@@ -24,8 +24,8 @@ public class TaskService {
         return t;
     }
 	
-	public Optional<Task> getTask(Integer id) {
-		return repo.findById(id);
+	public Task getTask(Integer id) {
+		return repo.findById(id).get();
 	}
 	public List<Task> getAllTask() {
         return repo.findAll();
@@ -40,7 +40,7 @@ public class TaskService {
 	}
 	public void addName(Integer id,String Name) {
 		Task task = repo.getById(id);
-		task.setDescription(Name);
+		task.setName(Name);
 		repo.save(task);
 	}
 	public void completeTask(Integer id) {

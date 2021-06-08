@@ -1,10 +1,13 @@
 package com.example.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,10 +17,25 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	private String label;
+
 	private String description;
 	@Column(name = "is_complete", columnDefinition = "TINYINT(1)")
 	private boolean isComplete;
+	@ManyToOne
+	@JoinColumn(name = "labelid", referencedColumnName = "id")
+	private Label label;
+
+	public Label getLabel() {
+		return label;
+	}
+
+	public void setLabel(Label label) {
+		this.label = label;
+	}
+
+	public void setComplete(boolean isComplete) {
+		this.isComplete = isComplete;
+	}
 
 	public boolean getIsComplete() {
 		return isComplete;
@@ -41,14 +59,6 @@ public class Task {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
 	}
 
 	public String getDescription() {

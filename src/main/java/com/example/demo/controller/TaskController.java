@@ -22,43 +22,53 @@ import com.example.demo.service.TaskService;
 @RequestMapping("/tasks")
 public class TaskController {
 	@Autowired
-	private TaskService ts;
+	private TaskService taskservice;
 
 	@PostMapping("/")
 	public Task add(@RequestBody Task t) {
-		return ts.addTask(t);
+		return taskservice.addTask(t);
 	}
 
 	@GetMapping
 	public List<Task> listTasks() {
-		return ts.getAllTask();
+		return taskservice.getAllTask();
 	}
 
 	@GetMapping("/{id}")
-	public Optional<Task> get(@PathVariable("id") Integer id) {
-		return ts.getTask(id);
+	public ResponseEntity<?> get(@PathVariable("id") Integer id) {
+		  try {
+	            Task task = taskservice.getTask(id);
+	            return new ResponseEntity<>(task, HttpStatus.OK);
+	        } catch (NoSuchElementException e) {
+	            return new ResponseEntity<>("Task not found",HttpStatus.NOT_FOUND);
+	        }
 	}
 
 	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Integer id) {
-
-		ts.deleteTask(id);
+	public ResponseEntity<?> delete(@PathVariable Integer id) {
+        try {
+		taskservice.deleteTask(id);
+		return new ResponseEntity<>("Task Deleted", HttpStatus.OK);
+        }
+        catch(Exception e) {
+        	return new ResponseEntity<>("Task is not present or already deleted",HttpStatus.NOT_FOUND);
+        }
 	}
 	
-	@PutMapping("/{id}/description/{description}")
-	public void updateDescription(@PathVariable("id") Integer id,@PathVariable("description") String description)
+	@PutMapping("/{id}/description")
+	public void updateDescription(@PathVariable("id") Integer id,@RequestBody String description)
 	{
-		ts.addDescription(id, description);
+		taskservice.addDescription(id, description);
 	}
-	@PutMapping("/{id}/name/{name}")
-	public void updateName(@PathVariable("id") Integer id,@PathVariable("name") String name)
+	@PutMapping("/{id}/name")
+	public void updateName(@PathVariable("id") Integer id,@RequestBody String name)
 	{
-		ts.addDescription(id, name);
+		taskservice.addName(id, name);
 	}
 	@PutMapping("/{id}/complete")
 	public String updateTaskStatus(@PathVariable("id") Integer id)
 	{
-		ts.completeTask(id);
+		taskservice.completeTask(id);
 		return "Task Completed";
 	}
 }
