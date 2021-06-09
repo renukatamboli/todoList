@@ -10,6 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name = "tasks")
 public class Task {
@@ -17,21 +23,25 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-    private String label;
+	// private String label;
 	private String description;
 	@Column(name = "is_complete", columnDefinition = "TINYINT(1)")
 	private boolean isComplete;
-//	@ManyToOne
-//	@JoinColumn(name = "labelid", referencedColumnName = "id")
-//	private Label label;
-//
-//	public Label getLabel() {
-//		return label;
-//	}
-//
-//	public void setLabel(Label label) {
-//		this.label = label;
-//	}
+	
+	
+	@ManyToOne
+	@JoinColumn(name = "labelid")
+	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+	@JsonIdentityReference(alwaysAsId = true)
+	private Label label;
+
+	public Label getLabel() {
+		return label;
+	}
+
+	public void setLabel(Label label) {
+		this.label = label;
+	}
 
 	public void setComplete(boolean isComplete) {
 		this.isComplete = isComplete;
@@ -51,14 +61,6 @@ public class Task {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-
-	public void setLabel(String label) {
-		this.label = label;
 	}
 
 	public String getName() {
