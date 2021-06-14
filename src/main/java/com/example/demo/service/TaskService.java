@@ -5,6 +5,8 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.demo.DTO.TaskRequest;
+import com.example.demo.model.Label;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +20,14 @@ public class TaskService {
 	
 	@Autowired
     TaskRepo repo;
+	@Autowired
+	LabelService labelService;
 	
-	public Task addTask(Task t) {
-        repo.save(t);
-        return t;
+	public Task addTask(TaskRequest taskRequest) {
+		List<Label> savedLabels = labelService.saveAllIfNeeded(taskRequest.getLabels());
+		Task task = new Task(taskRequest.getName(), taskRequest.getDescription(), savedLabels);
+        repo.save(task);
+        return task;
     }
 	
 	public Task getTask(Integer id) {

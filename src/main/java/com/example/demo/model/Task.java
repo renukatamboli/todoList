@@ -40,6 +40,12 @@ public class Task {
 	@JsonIgnoreProperties("labels")
 	private List<Label> labels;
 
+	public Task(String name, String description, List<Label> labels) {
+		this.name = name;
+		this.description = description;
+		this.labels = labels;
+	}
+
 	public List<Label> getLabels() {
 		return labels;
 	}

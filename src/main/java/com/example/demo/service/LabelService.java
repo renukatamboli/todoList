@@ -37,4 +37,7 @@ public class LabelService {
 		repo.save(label);
 	}
 
+	public List<Label> saveAllIfNeeded(List<String> labels) {
+
+	}
 }

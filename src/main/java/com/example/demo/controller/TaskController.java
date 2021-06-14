@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import com.example.demo.DTO.TaskRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,24 +28,23 @@ public class TaskController {
 	private TaskService taskservice;
 
 	@Autowired
-	private TaskPresenter taskconverter;
+	private TaskPresenter taskPresenter;
 	
 	@PostMapping("/")
-	public Task add(@RequestBody Task t) {
-		return taskservice.addTask(t);
+	public Task add(@RequestBody TaskRequest taskRequest) {
+		return taskservice.addTask(taskRequest);
 	}
 
 	@GetMapping
 	public List<TaskDTO> listTasks() {
-		List<Task> tasklist =  taskservice.getAllTask();
-		return taskconverter.entityToDto(tasklist);
+		return taskPresenter.entityToDto(taskservice.getAllTask());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable("id") Integer id) {
 		  try {
-	            Task task = taskservice.getTask(id);
-	            return new ResponseEntity<>(task, HttpStatus.OK);
+	            TaskDTO taskDTO = taskPresenter.entityToDto(taskservice.getTask(id));
+	            return new ResponseEntity<>(taskDTO, HttpStatus.OK);
 	        } catch (NoSuchElementException e) {
 	            return new ResponseEntity<>("Task not found",HttpStatus.NOT_FOUND);
 	        }
