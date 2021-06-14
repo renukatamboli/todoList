@@ -1,19 +1,27 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
@@ -27,20 +35,20 @@ public class Task {
 	private String description;
 	@Column(name = "is_complete", columnDefinition = "TINYINT(1)")
 	private boolean isComplete;
-	
-	
-	@ManyToOne
-	@JoinColumn(name = "labelid")
-	@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-	@JsonIdentityReference(alwaysAsId = true)
-	private Label label;
 
-	public Label getLabel() {
-		return label;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
+	@JoinTable(name = "mapping", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "labelid", referencedColumnName = "id"))
+	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
+	//@JsonIdentityReference(alwaysAsId = true)
+	@JsonIgnoreProperties("labels")
+	private List<Label> labels;
+
+	public List<Label> getLabels() {
+		return labels;
 	}
 
-	public void setLabel(Label label) {
-		this.label = label;
+	public void setLabels(List<Label> labels) {
+		this.labels = labels;
 	}
 
 	public void setComplete(boolean isComplete) {
