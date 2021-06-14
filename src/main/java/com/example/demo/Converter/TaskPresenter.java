@@ -10,14 +10,11 @@ import com.example.demo.DTO.TaskDTO;
 import com.example.demo.model.Task;
 
 @Component
-public class TaskConverter {
+public class TaskPresenter {
 
 	public TaskDTO entityToDto(Task task) {
-		ModelMapper mapper = new ModelMapper();
-		TaskDTO map = mapper.map(task, TaskDTO.class);
-		System.out.println(map);
-		return map;
-	} 
+		return new TaskDTO(task);
+	}
 	
 	public List<TaskDTO> entityToDto(List<Task> task){
 		return task.stream().map(x -> entityToDto(x)).collect(Collectors.toList());

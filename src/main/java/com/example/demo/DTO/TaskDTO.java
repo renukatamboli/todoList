@@ -1,41 +1,27 @@
 package com.example.demo.DTO;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.example.demo.model.Label;
+import com.example.demo.model.Task;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TaskDTO {
 
 	private String name;
 	private String description;
-	@JsonProperty("label")
-	private List<LabelDTO> labeldto;
+	private List<String> labels;
 
-	public List<LabelDTO> getLabeldto() {
-		return labeldto;
+	public TaskDTO(Task task) {
+		this.name = task.getName();
+		this.description = task.getDescription();
+		this.labels = task.getLabels().stream().map(Label::getName).collect(Collectors.toList());
 	}
 
+	public String getName() { return name; }
 
-	public void setLabeldto(List<LabelDTO> labeldto) {
-		this.labeldto = labeldto;
-	}
+	public String getDescription() { return description; }
 
-
-	public String getName() {
-		return name;
-	}
-
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
+	public List<String> getLabels() { return labels;}
 }

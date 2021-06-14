@@ -31,15 +31,12 @@ public class Task {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String name;
-	// private String label;
 	private String description;
 	@Column(name = "is_complete", columnDefinition = "TINYINT(1)")
 	private boolean isComplete;
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "mapping", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "labelid", referencedColumnName = "id"))
-	//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "name")
-	//@JsonIdentityReference(alwaysAsId = true)
 	@JsonIgnoreProperties("labels")
 	private List<Label> labels;
 

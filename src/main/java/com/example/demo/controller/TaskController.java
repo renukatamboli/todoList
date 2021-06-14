@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.Converter.TaskConverter;
+import com.example.demo.Converter.TaskPresenter;
 import com.example.demo.DTO.TaskDTO;
 import com.example.demo.model.Task;
 import com.example.demo.service.TaskService;
@@ -28,7 +27,7 @@ public class TaskController {
 	private TaskService taskservice;
 
 	@Autowired
-	private TaskConverter taskconverter;
+	private TaskPresenter taskconverter;
 	
 	@PostMapping("/")
 	public Task add(@RequestBody Task t) {
@@ -39,7 +38,6 @@ public class TaskController {
 	public List<TaskDTO> listTasks() {
 		List<Task> tasklist =  taskservice.getAllTask();
 		return taskconverter.entityToDto(tasklist);
-		//return taskservice.getAllTask();
 	}
 
 	@GetMapping("/{id}")
