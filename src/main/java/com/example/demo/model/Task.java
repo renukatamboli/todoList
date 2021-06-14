@@ -37,8 +37,11 @@ public class Task {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.ALL })
 	@JoinTable(name = "mapping", joinColumns = @JoinColumn(name = "id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "labelid", referencedColumnName = "id"))
-	@JsonIgnoreProperties("labels")
 	private List<Label> labels;
+
+	public Task() {
+		
+	}
 
 	public Task(String name, String description, List<Label> labels) {
 		this.name = name;

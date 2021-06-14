@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +41,15 @@ public class LabelService {
 	}
 
 	public List<Label> saveAllIfNeeded(List<String> labels) {
-
+        for(int i=0;i<labels.size();i++) {
+        	
+        	if(repo.findByName(labels.get(i))== null) {
+        		Label l = new Label();
+        		l.setName(labels.get(i));
+        		repo.save(l);
+        	}
+        }
+		return labels.stream().map( i -> repo.findByName(i)).collect(Collectors.toList());
+		
 	}
 }

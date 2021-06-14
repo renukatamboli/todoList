@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.example.demo.model.Label;
 
 public interface LabelRepo extends JpaRepository<Label, Integer> {
+	public Label findByName(String name);
 
 }

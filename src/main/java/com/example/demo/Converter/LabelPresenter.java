@@ -7,14 +7,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import com.example.demo.DTO.LabelDTO;
+import com.example.demo.DTO.TaskDTO;
 import com.example.demo.model.Label;
 @Component
-public class LabelConverter {
+public class LabelPresenter {
 
 	public LabelDTO entityToDto(Label label) {
-		ModelMapper mapper = new ModelMapper();
-		LabelDTO map = mapper.map(label, LabelDTO.class);
-		return map;
+		return new LabelDTO(label);
 	} 
 	
 	public List<LabelDTO> entityToDto(List<Label> label){

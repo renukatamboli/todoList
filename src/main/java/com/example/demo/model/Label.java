@@ -28,7 +28,7 @@ public class Label {
 	private String name;
 
 	@ManyToMany(mappedBy = "labels")
-	@JsonIgnoreProperties("tasks")
+	//@JsonIgnoreProperties("tasks")
 	private List<Task> tasks;
 
 	public int getId() {
@@ -41,7 +41,7 @@ public class Label {
 
 	public void setTask(List<Task> task) {
 		this.tasks = task;
-	}
+		}
 
 	public void setId(int id) {
 		this.id = id;

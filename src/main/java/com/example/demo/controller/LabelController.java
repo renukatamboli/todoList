@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.Converter.LabelPresenter;
+import com.example.demo.Converter.TaskPresenter;
+import com.example.demo.DTO.LabelDTO;
 import com.example.demo.model.Label;
 import com.example.demo.service.LabelService;
 
@@ -23,22 +26,26 @@ import com.example.demo.service.LabelService;
 public class LabelController {
 	@Autowired
 	private LabelService labelservice;
+	@Autowired
+	private LabelPresenter labelpresenter;
 
 	@PostMapping("/")
-	public Label add(@RequestBody Label l) {
+	public Label add(@RequestBody String labelname) {
+		Label l = new Label();
+		l.setName(labelname);
 		return labelservice.addLabel(l);
 	}
 
 	@GetMapping
-	public List<Label> listLabels() {
-		return labelservice.getAllLabel();
+	public List<LabelDTO> listLabels() {
+		return labelpresenter.entityToDto(labelservice.getAllLabel());
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> get(@PathVariable("id") Integer id) {
 		  try {
 	            Label label = labelservice.getLabel(id);
-	            return new ResponseEntity<>(label, HttpStatus.OK);
+	            return new ResponseEntity<>(labelpresenter.entityToDto(label), HttpStatus.OK);
 	        } catch (NoSuchElementException e) {
 	            return new ResponseEntity<>("Label not found",HttpStatus.NOT_FOUND);
 	        }
