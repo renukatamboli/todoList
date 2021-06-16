@@ -23,7 +23,7 @@ public class LabelService {
 	}
 
 	public Label getLabel(Integer id) {
-		return repo.findById(id).get();
+		return repo.findById(id).orElseThrow();
 	}
 
 	public List<Label> getAllLabel() {

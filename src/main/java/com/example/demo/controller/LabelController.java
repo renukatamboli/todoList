@@ -30,10 +30,8 @@ public class LabelController {
 	private LabelPresenter labelpresenter;
 
 	@PostMapping("/")
-	public Label add(@RequestBody String labelname) {
-		Label l = new Label();
-		l.setName(labelname);
-		return labelservice.addLabel(l);
+	public Label add(@RequestBody Label label) {
+		return labelservice.addLabel(label);
 	}
 
 	@GetMapping

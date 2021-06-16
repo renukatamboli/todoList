@@ -22,13 +22,13 @@ public class LabelControllerTest {
 
 	private MockMvc mockMvc;
 	
-	@Test
-	public void testAdd() throws Exception {
-		throw new RuntimeException("not yet implemented");
-	}
+//	@Test
+//	public void testAdd() throws Exception {
+//		throw new RuntimeException("not yet implemented");
+//	}
 	
 	@Before
-	private void Setup() throws Exception{
+	public void Setup() throws Exception{
 		mockMvc = MockMvcBuilders.standaloneSetup(label).build();
 
 	}
